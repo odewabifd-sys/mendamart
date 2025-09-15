@@ -1,4 +1,5 @@
 import React from 'react';
+import Link from 'next/link'; // This line is new
 
 export default function Home() {
   return (
@@ -13,12 +14,18 @@ export default function Home() {
           </p>
           
           <div className="mt-8 flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4 justify-center">
-            <a href="/search" className="px-8 py-3 bg-teal-600 text-white font-semibold rounded-lg shadow-md hover:bg-teal-700 transition duration-300 ease-in-out transform hover:scale-105">
-              Explore Services
-            </a>
-            <a href="/profile" className="px-8 py-3 bg-white text-teal-600 font-semibold rounded-lg border-2 border-teal-600 hover:bg-teal-50 transition duration-300 ease-in-out">
-              Join as an Artisan
-            </a>
+            {/* The first <a> tag is now wrapped in a <Link> component */}
+            <Link href="/search">
+              <a className="px-8 py-3 bg-teal-600 text-white font-semibold rounded-lg shadow-md hover:bg-teal-700 transition duration-300 ease-in-out transform hover:scale-105">
+                Explore Services
+              </a>
+            </Link>
+            {/* The second <a> tag is now wrapped in a <Link> component */}
+            <Link href="/profile">
+              <a className="px-8 py-3 bg-white text-teal-600 font-semibold rounded-lg border-2 border-teal-600 hover:bg-teal-50 transition duration-300 ease-in-out">
+                Join as an Artisan
+              </a>
+            </Link>
           </div>
         </div>
 
