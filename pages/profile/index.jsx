@@ -58,6 +58,25 @@ const TestimonialCard = ({ quote, name, service }) => (
   </div>
 );
 
+// Placeholder Components to fix the build error
+const ServicesPage = () => (
+  <div className="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
+    <h1 className="text-4xl font-extrabold text-gray-900">Services Page Coming Soon!</h1>
+  </div>
+);
+
+const ContactPage = () => (
+  <div className="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
+    <h1 className="text-4xl font-extrabold text-gray-900">Contact Us!</h1>
+  </div>
+);
+
+const ForgotPasswordPage = () => (
+  <div className="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
+    <h1 className="text-4xl font-extrabold text-gray-900">Password Reset Page</h1>
+  </div>
+);
+
 const HomePage = ({ onNavigate }) => (
   <>
     {/* Hero Section with Search */}
@@ -405,10 +424,16 @@ export default function App() {
         return <HomePage onNavigate={handleNavigation} />;
       case 'about':
         return <AboutPage onNavigate={handleNavigation} />;
+      case 'services':
+        return <ServicesPage />;
+      case 'contact':
+        return <ContactPage />;
       case 'login':
         return <LoginForm onNavigate={handleNavigation} />;
       case 'signup':
         return <SignupForm onNavigate={handleNavigation} />;
+      case 'forgot-password':
+        return <ForgotPasswordPage />;
       default:
         return <HomePage onNavigate={handleNavigation} />;
     }
