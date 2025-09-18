@@ -1,6 +1,20 @@
 import { useState } from "react";
-import { supabase } from "@/lib/supabaseClient";
-import Layout from "@/components/Layout";
+// Supabase client and auth setup
+// NOTE: Replace these with your actual Supabase keys and URL.
+import { createClient } from "@supabase/supabase-js";
+
+const supabaseUrl = "https://pdfvhmnogwskhqfjfhbe.supabase.co";
+const supabaseAnonKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBkZnZobW5vZ3dza2hxZmpmaGJlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTc2NTgyNTEsImV4cCI6MjA3MzIzNDI1MX0.mIq6kqFqhQZ9WR0uivnVvv_EgWdnNMMgLjYo4XtEh6wN";
+const supabase = createClient(supabaseUrl, supabaseAnonKey);
+
+// A basic, self-contained Layout component to resolve the import error.
+const Layout = ({ children }) => {
+  return (
+    <div className="min-h-screen bg-gray-100 flex flex-col items-center justify-center">
+      {children}
+    </div>
+  );
+};
 
 export default function AddService() {
   const [form, setForm] = useState({

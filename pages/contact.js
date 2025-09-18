@@ -1,5 +1,14 @@
-import Layout from "@/components/Layout";
 import { useState } from "react";
+
+// A basic, self-contained Layout component to resolve the import error.
+// In a real application, you would put this in a shared components folder.
+const Layout = ({ children }) => {
+  return (
+    <div className="min-h-screen bg-gray-100 flex flex-col items-center justify-center">
+      {children}
+    </div>
+  );
+};
 
 export default function Contact() {
   const [form, setForm] = useState({ name: "", email: "", message: "" });
