@@ -1,62 +1,71 @@
 import React from 'react';
-import Link from 'next/link';
+import { useRouter } from 'next/router';
+import { useSessionContext } from '@supabase/auth-helpers-react';
 
-export default function Home() {
+export default function ProfilePage() {
+  const { isLoading, session } = useSessionContext();
+  const router = useRouter();
+
+  // If the session is loading, show a simple loading message
+  if (isLoading) {
+    return (
+      <div className="flex items-center justify-center min-h-screen bg-gray-100">
+        <p className="text-xl text-gray-700">Loading profile...</p>
+      </div>
+    );
+  }
+
+  // If there's no active session, redirect to the login page
+  if (!session) {
+    router.push('/auth/login');
+    return null; // Return null to prevent rendering the page content
+  }
+
+  // Destructure user details from the session
+  const user = session.user;
+
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-50 text-gray-800">
-      <div className="flex flex-col items-center w-full flex-1 px-4 sm:px-20 text-center">
-        <div className="py-12 sm:py-24 max-w-4xl mx-auto">
-          <h1 className="text-5xl sm:text-6xl font-extrabold text-gray-900 leading-tight">
-            Find the perfect <span className="text-teal-600">artisan</span> for your needs.
-          </h1>
-          <p className="mt-4 text-xl text-gray-600">
-            MendaMart is your go-to platform to find skilled and reliable electricians, plumbers, and more, right in your neighborhood.
-          </p>
-          
-          <div className="mt-8 flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4 justify-center">
-            {/* The corrected Link component for Explore Services */}
-            <Link href="/search" className="px-8 py-3 bg-teal-600 text-white font-semibold rounded-lg shadow-md hover:bg-teal-700 transition duration-300 ease-in-out transform hover:scale-105">
-              Explore Services
-            </Link>
-            
-            {/* The corrected Link component for Join as an Artisan */}
-            <Link href="/profile" className="px-8 py-3 bg-white text-teal-600 font-semibold rounded-lg border-2 border-teal-600 hover:bg-teal-50 transition duration-300 ease-in-out">
-              Join as an Artisan
-            </Link>
+    <div className="bg-gray-100 min-h-screen p-8 sm:p-12">
+      <div className="max-w-4xl mx-auto bg-white rounded-xl shadow-lg p-6 sm:p-10">
+        <h1 className="text-4xl sm:text-5xl font-extrabold text-gray-900 mb-6 border-b-2 pb-4">
+          My Profile
+        </h1>
+
+        <div className="flex flex-col sm:flex-row items-start sm:items-center space-y-4 sm:space-y-0 sm:space-x-8 mb-8">
+          {/* Placeholder for a user profile picture or avatar */}
+          <div className="w-24 h-24 sm:w-32 sm:h-32 rounded-full bg-gray-200 flex items-center justify-center text-gray-500 text-3xl font-bold">
+            {user.email?.[0].toUpperCase() || '?'}
+          </div>
+
+          <div className="flex-1">
+            <h2 className="text-2xl sm:text-3xl font-bold text-gray-800 break-words mb-2">
+              {user.email}
+            </h2>
+            <p className="text-gray-500 font-medium">
+              User ID: <span className="text-sm font-mono break-all">{user.id}</span>
+            </p>
           </div>
         </div>
 
-        <div className="w-full max-w-4xl px-4 py-8 bg-white rounded-xl shadow-lg border border-gray-200">
-          <h2 className="text-3xl font-bold text-gray-900 mb-4">How it works</h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div className="flex flex-col items-center p-4 text-center">
-              <div className="text-4xl text-teal-600 mb-2">
-                <span role="img" aria-label="search">🔍</span>
-              </div>
-              <h3 className="text-xl font-bold">1. Find Artisans</h3>
-              <p className="mt-2 text-gray-600">
-                Browse through a wide range of vetted professionals by skill and location.
-              </p>
-            </div>
-            <div className="flex flex-col items-center p-4 text-center">
-              <div className="text-4xl text-teal-600 mb-2">
-                <span role="img" aria-label="chat">💬</span>
-              </div>
-              <h3 className="text-xl font-bold">2. Connect Instantly</h3>
-              <p className="mt-2 text-gray-600">
-                Use our built-in chat to discuss your project and get quotes directly.
-              </p>
-            </div>
-            <div className="flex flex-col items-center p-4 text-center">
-              <div className="text-4xl text-teal-600 mb-2">
-                <span role="img" aria-label="tools">🛠️</span>
-              </div>
-              <h3 className="text-xl font-bold">3. Get it Done</h3>
-              <p className="mt-2 text-gray-600">
-                Hire the right person for the job and get your tasks completed efficiently.
-              </p>
-            </div>
-          </div>
+        {/* Placeholder for additional user information or services */}
+        <div className="mt-8">
+          <h3 className="text-2xl font-semibold text-gray-800 mb-4">
+            Account Details
+          </h3>
+          <ul className="text-gray-600 space-y-3">
+            <li className="flex items-center">
+              <span className="font-semibold w-32">Email:</span>
+              <span>{user.email}</span>
+            </li>
+            <li className="flex items-center">
+              <span className="font-semibold w-32">Last Sign In:</span>
+              <span>{new Date(user.last_sign_in_at).toLocaleDateString()}</span>
+            </li>
+            <li className="flex items-center">
+              <span className="font-semibold w-32">Joined:</span>
+              <span>{new Date(user.created_at).toLocaleDateString()}</span>
+            </li>
+          </ul>
         </div>
       </div>
     </div>
